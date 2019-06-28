@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hs.dgsw.shopping_back.Domain.ProductMapper">
+
+    <insert id="add" parameterType="kr.hs.dgsw.shopping_back.Domain.Product">
+        insert into product(category_id, sub_id, name, manufacturer, mileage, original_price, price, description,
+                      information)
+        values (#{category_id}, #{name}, #{manufacturer}, #{mileage},
+                    #{original_price}, #{price}, #{description}, #{information})
+        <selectKey keyProperty="id" resultType="Long">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <update id="modify" parameterType="kr.hs.dgsw.shopping_back.Domain.Product">
+        update product set category_id=#{category_id}, sub_id=#{subId}, name=#{name},
+            manufacturer=#{manufacturer}, mileage=#{mileage}, original_price=#{original_price}, price=#{price},
+            description=#{description} , information=#{information}
+          where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="Long"
+            resultType="kr.hs.dgsw.shopping_back.Domain.Product">
+        select id, category_id as categoryId, sub_id as subId, name, manufacturer, mileage, original_price, price,
+          description, information, created, updated
+        from product
+        where id=#{id}
+    </select>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from product where id=#{id}
+    </delete>
+
+    <select id="findAll" resultType="HashMap">
+        select id, category_id as categoryId, sub_id as subId, name, manufacturer, mileage, original_price, price,
+          description, information, created, updated
+        from product
+    </select>
+
+    <select id="findByCategoryId" parameterType="Long"
+            resultType="HashMap">
+        select p.id, p.category_id as categoryId, p.sub_id as subId, p.name, manufacturer, mileage, original_price, price,
+          description, information, c.name, p.created, p.updated
+        from product p left join category c on p.category_id = c.id
+        where p.category_id = #{categoryId}
+    </select>
+
+    <select id="findBySubId" parameterType="Long"
+            resultType="HashMap">
+        select p.id, p.category_id as categoryId, p.sub_id as subId, p.name, manufacturer, mileage, original_price, price,
+          description, information, p.created, p.updated, a.filename, a.filepath
+        from product
+        p left join submenu s on p.sub_id = s.id
+        left join attachproduct a on p.id = a.product_id
+        where p.sub_id = #{subId}
+    </select>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hs.dgsw.shopping_back.Domain.SubMenuMapper">
+
+    <insert id="add" parameterType="kr.hs.dgsw.shopping_back.Domain.SubMenu">
+        insert into submenu(category_id, name)
+        values (#{category_id}, #{name})
+        <selectKey keyProperty="id" resultType="Long">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <update id="modify" parameterType="kr.hs.dgsw.shopping_back.Domain.SubMenu">
+        update submenu set category_id=#{category_id}, name=#{name}
+          where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="Long"
+            resultType="kr.hs.dgsw.shopping_back.Domain.SubMenu">
+        select id, category_id as categoryId, name
+        from submenu
+        where id=#{id}
+    </select>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from submenu where id=#{id}
+    </delete>
+
+    <select id="findAll" resultType="HashMap">
+        select id, category_id as categoryId, name
+        from submenu
+    </select>
+
+    <select id="findByCategoryId" parameterType="Long"
+            resultType="HashMap">
+        select s.id, s.category_id as categoryId, s.name
+        from submenu s left join category c on s.category_id = c.id
+        where s.category_id = #{categoryId}
+    </select>
+</mapper>

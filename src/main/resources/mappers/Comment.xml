@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.hs.dgsw.shopping_back.Domain.CommentMapper">
+
+    <insert id="add" parameterType="kr.hs.dgsw.shopping_back.Domain.Comment">
+        insert into comment(user_id, product_id, title)
+        values (#{user_id}, #{product_id}, #{title})
+        <selectKey keyProperty="id" resultType="Long">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <update id="modify" parameterType="kr.hs.dgsw.shopping_back.Domain.Comment">
+        update comment set user_id=#{user_id}, product_id=#{product_id},
+            title=#{title}
+          where id=#{id}
+    </update>
+
+    <select id="findById" parameterType="Long"
+            resultType="kr.hs.dgsw.shopping_back.Domain.Comment">
+        select id, product_id as productId, title, user_id as userId, created, updated
+        from comment
+        where id=#{id}
+    </select>
+
+    <delete id="deleteById" parameterType="Long">
+        delete from comment where id=#{id}
+    </delete>
+
+    <select id="findAll" resultType="HashMap">
+        select id, product_id as productId, title, user_id as userId, created, updated
+        from comment
+    </select>
+
+    <select id="findByUserId" parameterType="Long"
+            resultType="HashMap">
+        select c.id, c.product_id as productId, title, user_id as c.userId,
+                  c.created, c.updated
+        from comment c left join user u on c.user_id = u.id
+        where c.user_id = #{userId}
+    </select>
+
+    <select id="findByProductId" parameterType="Long"
+            resultType="HashMap">
+        select c.id, c.product_id as productId, title, user_id as userId,
+                  c.created, c.updated
+        from comment c left join product p on c.product_id = p.id
+        where c.product_id = #{productId}
+    </select>
+</mapper>
