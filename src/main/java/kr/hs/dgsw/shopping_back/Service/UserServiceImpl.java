@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService{
     public Long signup(User user) {
         return userMapper.add(user);
     }
+
+    @Override
+    public User findById(Long id) {
+        return userMapper.findById(id);
+    }
 }
