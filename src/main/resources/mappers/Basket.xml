@@ -4,15 +4,15 @@
 <mapper namespace="kr.hs.dgsw.shopping_back.Domain.BasketMapper">
 
     <insert id="add" parameterType="kr.hs.dgsw.shopping_back.Domain.Basket">
-        insert into basket(user_id, product_id)
-        values (#{user_id}, #{product_id})
+        insert into basket(user_id, product_id, orderNumber)
+        values (#{userId}, #{productId}, #{orderNumber})
         <selectKey keyProperty="id" resultType="Long">
             select last_insert_id()
         </selectKey>
     </insert>
 
     <update id="modify" parameterType="kr.hs.dgsw.shopping_back.Domain.Basket">
-        update basket set user_id=#{user_id}, product_id=#{product_id}
+        update basket set orderNumber = #{orderNumber}
           where id=#{id}
     </update>
 
@@ -28,14 +28,17 @@
     </delete>
 
     <select id="findAll" resultType="HashMap">
-        select id, user_id as userId, product_id as productId
+        select id, user_id as userId, product_id as productId, orderNumber
         from basket
     </select>
 
     <select id="findByUserId" parameterType="Long"
             resultType="HashMap">
-        select b.id, b.product_id as productId, b.user_id as userId
+        select b.id, b.product_id as productId, b.user_id as userId, orderNumber,
+                      p.name, p.price, a.id as attachId
         from basket b left join user u on b.user_id = u.id
+                      left join product p on b.product_id = p.id
+                      left join attachproduct a on a.product_id = p.id
         where b.user_id = #{userId}
     </select>
 </mapper>

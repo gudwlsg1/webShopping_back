@@ -79,6 +79,7 @@ create table Basket(
   id bigint auto_increment primary key,
   user_id bigint,
   product_id bigint,
-  reated datetime default current_timestamp,
+  orderNumber integer,
+  created datetime default current_timestamp,
   updated datetime on update current_timestamp
 )engine=InnoDB default charset=utf8;

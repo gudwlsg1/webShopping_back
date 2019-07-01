@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -13,7 +14,7 @@ public interface ProductMapper {
     int deleteById(@Param("id") Long id);
     Long add(Product product);
     int modify(Product product);
-    Product findById(@Param("id") Long id);
+    HashMap findById(@Param("id") Long id);
     List findByCategoryId(@Param("categoryId") Long categoryId);
     List findBySubId(@Param("subId") Long subId);
 }

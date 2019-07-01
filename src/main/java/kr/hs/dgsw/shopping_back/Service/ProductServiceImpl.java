@@ -5,6 +5,7 @@ import kr.hs.dgsw.shopping_back.Domain.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -34,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findById(Long id) {
+    public HashMap findById(Long id) {
         return productMapper.findById(id);
     }
 

@@ -21,11 +21,11 @@
     </update>
 
     <select id="findById" parameterType="Long"
-            resultType="kr.hs.dgsw.shopping_back.Domain.Product">
-        select id, category_id as categoryId, sub_id as subId, name, manufacturer, mileage, original_price, price,
-          description, information, created, updated
-        from product
-        where id=#{id}
+            resultType="HashMap">
+        select p.id, category_id as categoryId, sub_id as subId, p.name, manufacturer, mileage, original_price, price,
+          description, information, p.created, p.updated, a.filename, a.filepath
+        from product p left join attachproduct a on p.id = a.product_id
+        where p.id=#{id}
     </select>
 
     <delete id="deleteById" parameterType="Long">

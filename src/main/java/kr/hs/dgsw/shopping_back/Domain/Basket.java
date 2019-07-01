@@ -10,6 +10,7 @@ public class Basket {
     private Long id;
     private Long userId;
     private Long productId;
+    private Long orderNumber;
     private LocalDateTime created;
     private LocalDateTime updated;
 }

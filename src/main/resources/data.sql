@@ -1,5 +1,8 @@
 use webShopping;
 
+insert into user(account, password, username, phoneNumber, postNumber, address, email)
+values ('test1', '1234', 'HJ', '010-00000', '44132', 'dgsw', 'test@gmail.com');
+
 insert into category(id, name) values (1, 'top(m)') ,
   (2, 'bottom(m)'), (3, 'top(w)'),
   (4, 'bottom(w)'), (5,'shoes'),
@@ -79,3 +82,12 @@ values (13, 'hair-band1.jpg', 'D:/school/3Grade/web/webShopping/Shopping_back/im
 insert into attachproduct(product_id, filename, filepath)
 values (14, 'sunglass1.jpg', 'D:/school/3Grade/web/webShopping/Shopping_back/images/sunglass1.jpg'),
        (15, 'sunglass1.jpg', 'D:/school/3Grade/web/webShopping/Shopping_back/images/sunglass1.jpg');
+
+insert into basket(id, user_id, product_id, orderNumber)
+values (1,1,3,5);
+insert into basket(id, user_id, product_id, orderNumber)
+values (2,1,8,2);
+
+
+insert into comment(user_id, product_id, title)
+values (1,1,'comment1'), (1,1,'comment2');

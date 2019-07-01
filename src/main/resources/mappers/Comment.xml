@@ -5,7 +5,7 @@
 
     <insert id="add" parameterType="kr.hs.dgsw.shopping_back.Domain.Comment">
         insert into comment(user_id, product_id, title)
-        values (#{user_id}, #{product_id}, #{title})
+        values (#{userId}, #{productId}, #{title})
         <selectKey keyProperty="id" resultType="Long">
             select last_insert_id()
         </selectKey>
@@ -43,9 +43,10 @@
 
     <select id="findByProductId" parameterType="Long"
             resultType="HashMap">
-        select c.id, c.product_id as productId, title, user_id as userId,
+        select c.id, c.product_id as productId, title, user_id as userId, u.username,
                   c.created, c.updated
         from comment c left join product p on c.product_id = p.id
+                       left join user u on c.user_id = u.id
         where c.product_id = #{productId}
     </select>
 </mapper>
